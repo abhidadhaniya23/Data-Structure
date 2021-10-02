@@ -4,6 +4,7 @@ using namespace std;
 
 // function definition
 int insert();
+int deletion();
 
 // [!] Array Operations
 
@@ -14,9 +15,9 @@ int insert();
     // [ ] insert after sorting array
 
 // [-] Deletation
-    // [ ] delete at given index
-    // [ ] delete from beginning
-    // [ ] delete from the end
+    // [-] delete at given index
+    // [x] delete from beginning
+    // [x] delete from the end
 
 // [ ] Sorting
     // [ ] using bubble short algo.
@@ -24,21 +25,17 @@ int insert();
 // [ ] Replace number at given index
 
 
-// [/] Delete unnecessary code
-// arrayMethod.displayArr(arr, sizeOfArr);
-
-
 int arr[15] = { 1,2,3 }, number_of_elements = 3;
 int sizeOfArr = sizeof(arr) / sizeof(arr[0]);
 
 class operation {
 public:
-    void insertionResult(bool success, string operation) {
+    void operationResult(bool success, string operation) {
         if (success) {
             cout << "Element " << operation << " successful..." << endl;
         }
         else {
-            cout << "Oops! " << operation << " Fail..." << endl;
+            cout << "Oops! " << operation << " Failed..." << endl;
         }
         cout << endl;
     }
@@ -56,9 +53,17 @@ public:
             arr[i] = arr[i - 1];
         }
     }
-    // [/] if it's not necessary then delete it...
-    // void moveBackward() {
-    // }
+    void moveTillIndexBackward(int index) {
+        for (int i = index;i < number_of_elements;i++) {
+            arr[i] = arr[i + 1];
+        }
+    }
+    // it's useful for deletion...
+    void moveBackward() {
+        for (int i = 0;i < number_of_elements;i++) {
+            arr[i] = arr[i + 1];
+        }
+    }
 }moveElement;
 
 class insertion {
@@ -134,6 +139,60 @@ public:
 
 }insertionArray;
 
+class deletion {
+    int element, givenIndex;
+public:
+    friend class moveElements;
+    int beginning() {
+        if (number_of_elements != 0) {
+            arr[0] = 0;
+            moveElement.moveTillIndex(givenIndex);
+            number_of_elements--;
+            return 1;
+        }
+        else {
+            cout << "Array is already empty!" << endl;
+            return 0;
+        }
+    }
+    int atTheEnd() {
+        if (number_of_elements != 0) {
+            arr[number_of_elements - 1] = 0;
+            // no need to move array elements
+            number_of_elements--;
+            return 1;
+        }
+        else {
+            cout << "Array is already empty!" << endl;
+            return 0;
+        }
+    }
+    // BUG: Fix returning 1 while we entering givenIndex < number_of_elements
+    int atGivenIndex() {
+        if (number_of_elements != 0) {
+            cout << "Enter index of element to delete : ";
+            cin >> givenIndex;
+            if (givenIndex < number_of_elements) {
+                arr[givenIndex] = 0;
+                moveElement.moveTillIndexBackward(givenIndex);
+                number_of_elements--;
+                return 1;
+            }
+        }
+        else {
+            if (number_of_elements != 0) {
+                cout << "Array is already empty!" << endl;
+            }
+            else if (givenIndex < number_of_elements) {
+                cout << "You entered higher index than total numbers of element...!" << endl;
+            }
+            return 0;
+        }
+        cout << "Return 0 from deletion method..." << endl;
+        return 0;
+    }
+}deletionArray;
+
 int main() {
     do {
         // system("cls");
@@ -151,18 +210,20 @@ int main() {
         switch (choice) {
         case 1:
             if (insert()) {
-                result.insertionResult(true, "insertion");
+                result.operationResult(true, "insertion");
             }
             else {
-                result.insertionResult(false, "insertion");
+                result.operationResult(false, "insertion");
             }
             break;
         case 2:
             if (deletion()) {
-                result.insertionResult(true, "insertion");
+                cout << "Returned true" << endl;
+                result.operationResult(true, "deletion");
             }
             else {
-                result.insertionResult(false, "insertion");
+                cout << "Returned false" << endl;
+                result.operationResult(false, "deletion");
             }
             break;
         case 4:
@@ -191,7 +252,7 @@ int insert() {
     cout << "Which type of insertion do you want ? : ";
     cin >> insertChoice;
 
-    // [ ] types of insertion
+    // types of insertion
     switch (insertChoice) {
     case 1:
         insertionArray.beginning();
@@ -214,33 +275,32 @@ int insert() {
         break;
     }
 }
-int deletion(){
+int deletion() {
     // displaying array before insertion
     arrayMethod.displayArr(arr, number_of_elements);
 
-    int insertChoice;
-    cout << "1. Insert beginning" << endl;
-    cout << "2. Insert at the end" << endl;
-    cout << "3. insert on given index" << endl;
-    cout << "4. insert after sorting array" << endl;
+    int deleteChoice;
+    cout << "1. Delete beginning element" << endl;
+    cout << "2. Delete the end element" << endl;
+    cout << "3. Delete given index element" << endl;
     cout << endl;
-    cout << "Which type of insertion do you want ? : ";
-    cin >> insertChoice;
+    cout << "Which type of deletion do you want ? : ";
+    cin >> deleteChoice;
 
     // [ ] types of insertion
-    switch (insertChoice) {
+    switch (deleteChoice) {
     case 1:
-        insertionArray.beginning();
+        deletionArray.beginning();
         // displaying array after insertion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
     case 2:
-        insertionArray.atTheEnd();
+        deletionArray.atTheEnd();
         // displaying array after insertion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
     case 3:
-        insertionArray.atGivenIndex();
+        deletionArray.atGivenIndex();
         // displaying array after insertion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
@@ -253,7 +313,15 @@ int deletion(){
 
 /*
 
-[!] steps to perform complete program...
+// [!] steps to perform complete program...
+
+// bubble shot and insertion algo. for sorting
+// reverse an array
+
+- remove duplicate elements
+- linear search / binary search
+- concentinate / merging array (with sorting)
+- min and max element finding
 
 first of all make an array in global declaration
 
