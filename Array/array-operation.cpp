@@ -41,7 +41,6 @@ public:
         else {
             cout << "Oops! " << operation << " Failed..." << endl;
         }
-        cout << endl;
     }
 }result;
 
@@ -69,6 +68,23 @@ public:
         }
     }
 }moveElement;
+
+class sorting {
+    int a = 10, b = 5;
+public:
+    // swap elements using pointer
+    void swap(int* num1, int* num2) {
+        int temp;
+        temp = *num1;
+        *num1 = *num2;
+        *num2 = temp;
+    }
+    void reverseArr() {
+        for (int i = 0;i < number_of_elements / 2;i++) {
+            swap(&arr[i], &arr[(number_of_elements - 1) - i]);
+        }
+    }
+}sortArray;
 
 class insertion {
     int insertElement, givenIndex;
@@ -206,7 +222,8 @@ int main() {
         cout << "1. Insertion " << endl;
         cout << "2. Deletation " << endl;
         cout << "3. Sorting " << endl;
-        cout << "4. Quit" << endl;
+        cout << "4. Reverse the array " << endl;
+        cout << "5. Quit" << endl;
         cout << "-------------------------" << endl;
         cout << "What do you want to do ? : ";
         cin >> choice;
@@ -230,6 +247,16 @@ int main() {
             }
             break;
         case 4:
+            if (number_of_elements > 0) {
+                sortArray.reverseArr();
+                result.operationResult(true, "reversed");
+            }
+            else {
+                cout << "The array is already empty...!" << endl;
+                result.operationResult(false, "reversed");
+            }
+            break;
+        case 5:
             exit(0);
             break;
 
@@ -368,6 +395,10 @@ first of all make an array in global declaration
     - insert at the end
     - insert at given index
     - insert after sorting array
-2.
+2. delete
+
+3. sort array
+    - create function for swap variables
+    - use for loop for swap all elements in array
 
 */
