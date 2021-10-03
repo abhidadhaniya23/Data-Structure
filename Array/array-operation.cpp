@@ -29,7 +29,7 @@ int deletion();
 // BUG: Fix all return 1 while operation fail...
 
 
-int arr[15] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 }, number_of_elements = 15;
+int arr[15] = { 1,2,3 }, number_of_elements = 3;
 int sizeOfArr = sizeof(arr) / sizeof(arr[0]);
 
 class operation {
@@ -149,7 +149,6 @@ class deletion {
 public:
     friend class moveElements;
     int beginning() {
-        cout << "Number of elements : " << number_of_elements << endl;
         if (number_of_elements > 0) {
             arr[0] = 0;
             moveElement.moveBackward();
@@ -162,7 +161,6 @@ public:
         }
     }
     int atTheEnd() {
-        cout << "Number of elements : " << number_of_elements << endl;
         if (number_of_elements != 0) {
             arr[number_of_elements - 1] = 0;
             // no need to move array elements
@@ -174,9 +172,7 @@ public:
             return 0;
         }
     }
-    // BUG: Fix returning 1 while we entering givenIndex < number_of_elements
     int atGivenIndex() {
-        cout << "Number of elements : " << number_of_elements << endl;
         if (number_of_elements > 0) {
             cout << "Enter index of element to delete : ";
             cin >> givenIndex;
@@ -187,9 +183,7 @@ public:
                 number_of_elements--;
                 return 1;
             }
-            else {
-                return 0;
-            }
+            return 0;
         }
         else {
             if (number_of_elements != 0) {
@@ -198,15 +192,17 @@ public:
             else if (givenIndex < number_of_elements) {
                 cout << "You entered higher index than total numbers of element...!" << endl;
             }
+            return 0;
         }
-        cout << "Return 0 from deletion method..." << endl;
-        return 0;
     }
 }deletionArray;
 
 int main() {
+    system("cls");
     do {
-        // system("cls");
+        // display array before showing operations on array...
+        arrayMethod.displayArr(arr, number_of_elements);
+
         int choice;
         cout << "-------------------------" << endl;
         cout << "1. Insertion " << endl;
@@ -229,11 +225,9 @@ int main() {
             break;
         case 2:
             if (deletion()) {
-                cout << "Returned true" << endl;
                 result.operationResult(true, "deletion");
             }
             else {
-                cout << "Returned false" << endl;
                 result.operationResult(false, "deletion");
             }
             break;
@@ -266,17 +260,34 @@ int insert() {
     // types of insertion
     switch (insertChoice) {
     case 1:
-        insertionArray.beginning();
+        // [!] Also check conditions for these operations because they return something...
+        // if you don't check conditions then it's by default return 1...
+        if (insertionArray.beginning()) {
+            return 0;
+        }
+        else {
+            return 1;
+        }
         // displaying array after insertion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
     case 2:
-        insertionArray.atTheEnd();
+        if (insertionArray.atTheEnd()) {
+            return 0;
+        }
+        else {
+            return 1;
+        }
         // displaying array after insertion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
     case 3:
-        insertionArray.atGivenIndex();
+        if (insertionArray.atGivenIndex()) {
+            return 0;
+        }
+        else {
+            return 1;
+        }
         // displaying array after insertion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
@@ -301,17 +312,32 @@ int deletion() {
     // [ ] types of insertion
     switch (deleteChoice) {
     case 1:
-        deletionArray.beginning();
+        if (deletionArray.beginning()) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
         // displaying array after deeletion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
     case 2:
-        deletionArray.atTheEnd();
+        if (deletionArray.atTheEnd()) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
         // displaying array after deletion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
     case 3:
-        deletionArray.atGivenIndex();
+        if (deletionArray.atGivenIndex()) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
         // displaying array after deletion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
