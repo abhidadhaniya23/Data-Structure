@@ -8,28 +8,30 @@ int deletion();
 
 // [!] Array Operations
 
-// [-] Insertion
+// [ ] randomize the array
+
+// [x] Insertion
     // [x] insert at beginning
     // [x] insert at the end
     // [x] insert on given index
-    // [ ] insert after sorting array
+    // [x] insert after sorting array
 
-// [-] Deletation
-    // [-] delete at given index
+// [x] Deletation
+    // [x] delete at given index
     // [x] delete from beginning
     // [x] delete from the end
 
-// [ ] Sorting
-    // [ ] using bubble short algo.
+// [x] Sorting
+    // [x] using bubble short algo.
 
-// [ ] reverse an array
+// [x] reverse an array
 
 // [ ] Replace number at given index
 
 // BUG: Fix all operations for possible possibilities (like if user enter higher index for insertion or other else...)
 
 
-int arr[15] = { 1,2,3 }, number_of_elements = 3;
+int arr[15] = { 5,22,7,4,8,1,3,15,12,20,10 }, number_of_elements = 11;
 int sizeOfArr = sizeof(arr) / sizeof(arr[0]);
 
 class operation {
@@ -70,7 +72,6 @@ public:
 }moveElement;
 
 class sorting {
-    int a = 10, b = 5;
 public:
     // swap elements using pointer
     void swap(int* num1, int* num2) {
@@ -84,7 +85,64 @@ public:
             swap(&arr[i], &arr[(number_of_elements - 1) - i]);
         }
     }
+    void sort() {
+        int index = 0;
+        while (index < number_of_elements) {
+            for (int i = 0;i < number_of_elements - 1;i++) {
+                if (arr[i] > arr[i + 1]) {
+                    swap(&arr[i], &arr[i + 1]);
+                }
+            }
+            index++;
+        }
+    }
 }sortArray;
+
+class searching {
+    int searchElement;
+public:
+    int linearSearch() {
+        return 0;
+    }
+    int binarySearch() {
+        // [ ] complete this binary search
+        /*
+        [*]
+        - how to search element using binary search
+            - 1. sort the array
+            - 2. find mid element of array
+            - 3. check whether searching element is less or greater than mid element
+                - if < then find mid of those elements
+                - if > then find mid of those elements
+        */
+
+        cout << "Enter element to search : ";
+        cin >> searchElement;
+        int midElement;
+
+        if (number_of_elements != 0) {
+            sortArray.sort();
+            midElement = arr[number_of_elements / 2];
+            while (midElement != searchElement) {
+                if (midElement < searchElement) {
+
+                }
+                else {
+
+                }
+            }
+            // for (int i = 0;i < number_of_elements / 2;i++) {
+            //     if (arr[i] < midElement) {
+
+            //     }
+            // }
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+}searchElement;
 
 class insertion {
     int insertElement, givenIndex;
@@ -96,7 +154,7 @@ public:
             return 0;
         }
         else {
-            cout << "Enter a number to insert at beginning : ";
+            cout << "Enter a number to insert : ";
             cin >> insertElement;
             cout << "You want to insert " << insertElement << endl;
 
@@ -117,12 +175,9 @@ public:
             return 0;
         }
         else {
-            cout << "Enter a number to insert at the end : ";
+            cout << "Enter a number to insert : ";
             cin >> insertElement;
             cout << "You want to insert " << insertElement << endl;
-
-            // [x] algo to insert element at the end
-            // insert element at index 0
             arr[number_of_elements] = insertElement;
             number_of_elements++;
 
@@ -141,7 +196,6 @@ public:
             cin >> givenIndex;
             cout << "You want to insert " << insertElement << " at index : " << givenIndex << endl;
 
-            // [x] algo to insert element at the given index
             // move till index
             moveElement.moveTillIndex(givenIndex);
 
@@ -152,12 +206,21 @@ public:
             return 1;
         }
     }
-    // int afterSorting() {
-    //     return 0;
-        // [ ] create algo for sort an array
-    // }
+    int afterSorting() {
+        if (number_of_elements == sizeOfArr) {
+            cout << "Oops! Array is full" << endl;
+            return 0;
+        }
+        else {
+            // there are also a simple way to add element after sorting
+            // 1. insert new element at the end or you can also add it at beginning.
+            // 2. then sort the array.
+            atTheEnd();
+            sortArray.sort();
 
-
+            return 1;
+        }
+    }
 }insertionArray;
 
 class deletion {
@@ -223,12 +286,12 @@ int main() {
         cout << "2. Deletation " << endl;
         cout << "3. Sorting " << endl;
         cout << "4. Reverse the array " << endl;
-        cout << "5. Quit" << endl;
+        cout << "5. Search a element " << endl;
+        cout << "6. Quit" << endl;
         cout << "-------------------------" << endl;
         cout << "What do you want to do ? : ";
         cin >> choice;
 
-        // [ ] create switch case here
         switch (choice) {
         case 1:
             if (insert()) {
@@ -246,6 +309,16 @@ int main() {
                 result.operationResult(false, "deletion");
             }
             break;
+        case 3:
+            if (number_of_elements > 0) {
+                sortArray.sort();
+                result.operationResult(true, "reversed");
+            }
+            else {
+                cout << "The array is already empty...!" << endl;
+                result.operationResult(false, "reversed");
+            }
+            break;
         case 4:
             if (number_of_elements > 0) {
                 sortArray.reverseArr();
@@ -257,6 +330,14 @@ int main() {
             }
             break;
         case 5:
+            if (searching()) {
+                result.operationResult(true, "founded");
+            }
+            else {
+                result.operationResult(false, "find");
+            }
+            break;
+        case 6:
             exit(0);
             break;
 
@@ -276,7 +357,7 @@ int insert() {
     int insertChoice;
     cout << "1. Insert beginning" << endl;
     cout << "2. Insert at the end" << endl;
-    cout << "3. insert on given index" << endl;
+    cout << "3. insert at given index" << endl;
     cout << "4. insert after sorting array" << endl;
     cout << endl;
     cout << "Which type of insertion do you want ? : ";
@@ -316,6 +397,18 @@ int insert() {
         // displaying array after insertion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
+    case 4:
+        if (insertionArray.afterSorting()) {
+            return 0;
+        }
+        else {
+            // displaying array after insertion...
+            arrayMethod.displayArr(arr, number_of_elements);
+            return 1;
+        }
+        // displaying array after insertion...
+        arrayMethod.displayArr(arr, number_of_elements);
+        break;
 
     default:
         cout << "Invalid Choice" << endl;
@@ -334,7 +427,6 @@ int deletion() {
     cout << "Which type of deletion do you want ? : ";
     cin >> deleteChoice;
 
-    // [ ] types of insertion
     switch (deleteChoice) {
     case 1:
         if (deletionArray.beginning()) {
@@ -371,6 +463,45 @@ int deletion() {
         cout << "Invalid Choice" << endl;
         break;
     }
+}
+int searching() {
+    // displaying array before insertion
+    arrayMethod.displayArr(arr, number_of_elements);
+
+    int searchChoice;
+    cout << "1. Search element using linear search" << endl;
+    cout << "1. Search element using binary search" << endl;
+    cout << endl;
+    cout << "Which type of deletion do you want ? : ";
+    cin >> deleteChoice;
+
+    switch (searchChoice) {
+    case 1:
+        if (searchElement.linearSearch()) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+        // displaying array after deeletion...
+        arrayMethod.displayArr(arr, number_of_elements);
+        break;
+    case 2:
+        if (searchElement.binarySearch()) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+        // displaying array after deletion...
+        arrayMethod.displayArr(arr, number_of_elements);
+        break;
+
+    default:
+        cout << "Invalid Choice" << endl;
+        break;
+    }
+
 }
 
 /*
