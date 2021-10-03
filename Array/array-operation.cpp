@@ -26,7 +26,7 @@ int deletion();
 
 // [ ] Replace number at given index
 
-// BUG: Fix all return 1 while operation fail...
+// BUG: Fix all operations for possible possibilities (like if user enter higher index for insertion or other else...)
 
 
 int arr[15] = { 1,2,3 }, number_of_elements = 3;
@@ -183,15 +183,13 @@ public:
                 number_of_elements--;
                 return 1;
             }
+            else {
+                cout << "You entered higher index than total numbers of element...!" << endl;
+            }
             return 0;
         }
         else {
-            if (number_of_elements != 0) {
-                cout << "Array is already empty!" << endl;
-            }
-            else if (givenIndex < number_of_elements) {
-                cout << "You entered higher index than total numbers of element...!" << endl;
-            }
+            cout << "Array is already empty!" << endl;
             return 0;
         }
     }
