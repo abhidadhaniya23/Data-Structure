@@ -22,10 +22,14 @@ int deletion();
 // [ ] Sorting
     // [ ] using bubble short algo.
 
+// [ ] reverse an array
+
 // [ ] Replace number at given index
 
+// BUG: Fix all return 1 while operation fail...
 
-int arr[15] = { 1,2,3 }, number_of_elements = 3;
+
+int arr[15] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 }, number_of_elements = 15;
 int sizeOfArr = sizeof(arr) / sizeof(arr[0]);
 
 class operation {
@@ -132,9 +136,10 @@ public:
             return 1;
         }
     }
-    int afterSorting() {
+    // int afterSorting() {
+    //     return 0;
         // [ ] create algo for sort an array
-    }
+    // }
 
 
 }insertionArray;
@@ -144,9 +149,10 @@ class deletion {
 public:
     friend class moveElements;
     int beginning() {
-        if (number_of_elements != 0) {
+        cout << "Number of elements : " << number_of_elements << endl;
+        if (number_of_elements > 0) {
             arr[0] = 0;
-            moveElement.moveTillIndex(givenIndex);
+            moveElement.moveBackward();
             number_of_elements--;
             return 1;
         }
@@ -156,6 +162,7 @@ public:
         }
     }
     int atTheEnd() {
+        cout << "Number of elements : " << number_of_elements << endl;
         if (number_of_elements != 0) {
             arr[number_of_elements - 1] = 0;
             // no need to move array elements
@@ -169,14 +176,19 @@ public:
     }
     // BUG: Fix returning 1 while we entering givenIndex < number_of_elements
     int atGivenIndex() {
-        if (number_of_elements != 0) {
+        cout << "Number of elements : " << number_of_elements << endl;
+        if (number_of_elements > 0) {
             cout << "Enter index of element to delete : ";
             cin >> givenIndex;
+            cout << "Given index is " << givenIndex << " For deletion" << endl;
             if (givenIndex < number_of_elements) {
                 arr[givenIndex] = 0;
                 moveElement.moveTillIndexBackward(givenIndex);
                 number_of_elements--;
                 return 1;
+            }
+            else {
+                return 0;
             }
         }
         else {
@@ -186,7 +198,6 @@ public:
             else if (givenIndex < number_of_elements) {
                 cout << "You entered higher index than total numbers of element...!" << endl;
             }
-            return 0;
         }
         cout << "Return 0 from deletion method..." << endl;
         return 0;
@@ -206,14 +217,14 @@ int main() {
         cout << "What do you want to do ? : ";
         cin >> choice;
 
-        // [ ] make here switch case
+        // [ ] create switch case here
         switch (choice) {
         case 1:
             if (insert()) {
-                result.operationResult(true, "insertion");
+                result.operationResult(false, "insertion");
             }
             else {
-                result.operationResult(false, "insertion");
+                result.operationResult(true, "insertion");
             }
             break;
         case 2:
@@ -291,17 +302,17 @@ int deletion() {
     switch (deleteChoice) {
     case 1:
         deletionArray.beginning();
-        // displaying array after insertion...
+        // displaying array after deeletion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
     case 2:
         deletionArray.atTheEnd();
-        // displaying array after insertion...
+        // displaying array after deletion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
     case 3:
         deletionArray.atGivenIndex();
-        // displaying array after insertion...
+        // displaying array after deletion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
 
@@ -320,6 +331,7 @@ int deletion() {
 
 - remove duplicate elements
 - linear search / binary search
+- reverse an array (using replacing last index to first...)
 - concentinate / merging array (with sorting)
 - min and max element finding
 
