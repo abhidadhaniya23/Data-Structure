@@ -473,7 +473,7 @@ int searching() {
     cout << "1. Search element using binary search" << endl;
     cout << endl;
     cout << "Which type of deletion do you want ? : ";
-    cin >> deleteChoice;
+    cin >> searchChoice;
 
     switch (searchChoice) {
     case 1:
