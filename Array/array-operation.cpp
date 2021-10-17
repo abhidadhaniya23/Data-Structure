@@ -329,14 +329,14 @@ int main() {
                 result.operationResult(false, "reversed");
             }
             break;
-        case 5:
-            if (searching()) {
-                result.operationResult(true, "founded");
-            }
-            else {
-                result.operationResult(false, "find");
-            }
-            break;
+        // case 5:
+        //     if (searching()) {
+        //         result.operationResult(true, "founded");
+        //     }
+        //     else {
+        //         result.operationResult(false, "find");
+        //     }
+        //     break;
         case 6:
             exit(0);
             break;
