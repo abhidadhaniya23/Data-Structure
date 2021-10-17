@@ -45,7 +45,7 @@ class queueDatastructure {
     int dataElement;
 public:
     bool isFull() {
-        if (rear == maxSize) {
+        if (rear == maxSize - 1) {
             return true;
         }
         else {
