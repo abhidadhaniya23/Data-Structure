@@ -4,29 +4,12 @@ using namespace std;
 void getData();
 void displayQueue();
 
-// global declaration of queue
-int queue[10] = { };
-int front = -1, rear = -1, maxSize = 10;
+int queue[10] = {};
+int front = -1, rear = -1, maxSize = 5;
 
-// [x] enqueue() => to add an item to queue.
-// [x] dequeue() => remove an item from the queue.
-// [x] peek() => get the element at the front of the queue without removing it.
-// [x] isFull() => check if the queue is full.
-// [x] isEmpty() => check if the queue is empty.
-
-// We don't have to print queue using for loop and other but here we have to see all thing, what is happining so that we can understand.
 void displayQueue() {
     cout << endl;
-    cout << "Now, Your Queue is : ";
-    cout << " [ ";
-    for (int i = front;i <= rear;i++) {
-        cout << queue[i];
-        if (i == rear) {
-            break;
-        }
-        cout << ",";
-    }
-    cout << " ] " << endl;
+    cout << "Now, Front is : " << queue[front] << ", Rear is : " << queue[rear] << endl;
 }
 
 class retult {
@@ -62,9 +45,25 @@ public:
     }
 
     void enqueue() {    // insertion
+        // [ ] check the conditions for if some spaces are available at beginning then push that data to their (circular queue)
         if (isFull()) {
-            cout << "Queue is full..." << endl;
-            operationResult.queueOperation(false, "Enqueue");
+            if (front != -1 && rear == maxSize - 1) {
+                rear = -1;
+                cout << "Enter element to enqueue : ";
+                cin >> dataElement;
+                if (isEmpty()) {
+                    rear++;
+                    front++;
+                }
+                else {
+                    rear++;
+                }
+                queue[rear] = dataElement;
+            }
+            else {
+                cout << "Queue is full..." << endl;
+                operationResult.queueOperation(false, "Enqueue");
+            }
         }
         else {
             if (isEmpty()) {
@@ -90,14 +89,6 @@ public:
         }
         else {
             front++;
-        }
-    }
-    void peek() {
-        if (!isEmpty()) {
-            cout << "The front of queue is : " << queue[front] << endl;
-        }
-        else {
-            cout << "Queue is empty..." << endl;
         }
     }
 
@@ -127,9 +118,6 @@ int main() {
             queueOperation.dequeue();
             break;
         case 3:
-            queueOperation.peek();
-            break;
-        case 4:
             exit(0);
             break;
 
@@ -147,8 +135,7 @@ void getData() {
     cout << "----------------" << endl;
     cout << "1. Enqueue()" << endl;
     cout << "2. Dequeue()" << endl;
-    cout << "3. Peek()" << endl;
-    cout << "4. Exit" << endl;
+    cout << "3. Exit" << endl;
     cout << "----------------" << endl;
     cout << endl;
     cout << "What you want to do ? : ";
