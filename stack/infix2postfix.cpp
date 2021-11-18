@@ -49,7 +49,6 @@ public:
     }
     char pop() {
         char popElement = stack[top];
-        stack[top] = 0;
         top--;
         return popElement;
     }
@@ -68,23 +67,12 @@ public:
         }
     }
 
-    // Associativity
-    // string associativity() {
-    //     if (stack[top] == '+' && stack[top] == '-') {
-    //         return "ltr";
-    //     }
-    //     else if (stack[top] == '*' && infix[j] == '/') {
-
-    //     }
-    //     return "rtl";
-    // }
-
 }stackFunction;
 
 int main() {
     int j = 0;
     // taking infix expression from user
-    cout << "Enter your infix expression : ";
+    cout << endl << "Enter your infix expression : ";
     cin >> infix;
     int length_infix = 0;
     for (int i = 0;infix[i] != '\0';i++) {
@@ -101,9 +89,7 @@ int main() {
                 stackFunction.push(infix[i]);
             }
             else if (infix[i] == '(') {
-                cout << "test" << endl;
-                stack[top] = '(';
-                top++;
+                stackFunction.push('(');
             }
             else if (infix[i] == ')') {
                 while (stack[top] != '(') {
@@ -121,13 +107,20 @@ int main() {
             }
             else if (stackFunction.priority(infix[i]) == stackFunction.priority(stack[top])) {
                 if (stack[top] == '+' && infix[i] == '-' || stack[top] == '-' && infix[i] == '+') {
-
+                    // cout << "test" << endl;
+                    postfixExpression[j] = stackFunction.pop();
+                    j++;
+                    stackFunction.push(infix[i]);
                 }
-                if (stack[top] == '*' && infix[i] == '/' || stack[top] == '/' && infix[i] == '*') {
-
+                else if (stack[top] == '*' && infix[i] == '/' || stack[top] == '/' && infix[i] == '*') {
+                    // cout << "test" << endl;
+                    postfixExpression[j] = stackFunction.pop();
+                    j++;
+                    stackFunction.push(infix[i]);
                 }
-                if (stack[top] == '*' && infix[i] == '/' || stack[top] == '/' && infix[i] == '*') {
-
+                else if (stack[top] == '^' && infix[i] == '$' || stack[top] == '$' && infix[i] == '^') {
+                    postfixExpression[j] = infix[i];
+                    j++;
                 }
             }
         }
