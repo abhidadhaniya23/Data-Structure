@@ -56,14 +56,17 @@ public:
     // priority
     int priority(char data) {
         // => here all return returns priority order of operators
-        if (data == '+' || data == '-') {
+        if (data == '(') {
             return 0;
         }
-        else if (data == '*' || data == '/') {
+        else if (data == '+' || data == '-') {
             return 1;
         }
-        else {
+        else if (data == '*' || data == '/') {
             return 2;
+        }
+        else {
+            return 3;
         }
     }
 
@@ -71,6 +74,7 @@ public:
 
 int main() {
     int j = 0;
+    char x;
     // taking infix expression from user
     cout << endl << "Enter your infix expression : ";
     cin >> infix;
@@ -89,11 +93,15 @@ int main() {
                 stackFunction.push(infix[i]);
             }
             else if (infix[i] == '(') {
+                cout << "Test" << endl;
                 stackFunction.push('(');
             }
             else if (infix[i] == ')') {
+                cout << "testing" << endl;
                 while (stack[top] != '(') {
+                    cout << "now, top is " << top << endl;
                     postfixExpression[j] = stackFunction.pop();
+                    j++;
                 }
                 stackFunction.pop();
             }
@@ -123,6 +131,7 @@ int main() {
                     j++;
                 }
             }
+            cout << "Top is : " << top << endl;
         }
     }
     while (top != -1) {
@@ -137,28 +146,3 @@ int main() {
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-// for (int i = 0;i < length_infix;i++) {
-//     // operators to scan => (, ), +, -, ^, *, /
-
-//     switch (infix[i]) {
-//     // case '(':
-//     //     stackFunction.push('(');
-//     //     break;
-//     // case ')':
-//     //     do {
-//     //         stackFunction.push();
-//     //     } while (infix[i] != ')');
-
-
-//     default:
-//         break;
-//     }
