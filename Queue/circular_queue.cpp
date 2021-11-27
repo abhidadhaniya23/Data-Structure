@@ -4,7 +4,7 @@ using namespace std;
 void getData();
 void displayQueue();
 
-int queue[10] = {};
+int queue[5] = {};
 int front = -1, rear = -1, maxSize = 5;
 
 void displayQueue() {
@@ -99,7 +99,7 @@ int main() {
     int choice;
     system("cls");
 
-    cout << "=> The max size of queue is 10." << endl;
+    cout << "=> The max size of queue is 5." << endl;
 
     do {
         if (front == -1 && rear == -1) {

@@ -140,9 +140,14 @@ int main() {
                     postfixExpression[j] = infix[i];
                     j++;
                 }
-                else {
-                    postfixExpression[j] = stackFunction.pop();
-                    j++;
+                else if (stack[top] == infix[i]) {
+                    for (int k = i;k >= 0;k--) {
+                        // cout << "k : " << k << endl;
+                        if (stackFunction.priority(infix[k]) == stackFunction.priority(stack[top])) {
+                            postfixExpression[j] = stackFunction.pop();
+                            j++;
+                        }
+                    }
                     stackFunction.push(infix[i]);
                 }
             }
