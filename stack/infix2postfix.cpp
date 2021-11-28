@@ -59,10 +59,10 @@ public:
         if (data == '(') {
             return 0;
         }
-        else if (data == '+' || data == '-') {
+        if (data == '+' || data == '-') {
             return 1;
         }
-        else if (data == '*' || data == '/') {
+        if (data == '*' || data == '/') {
             return 2;
         }
         else {
@@ -73,6 +73,7 @@ public:
 }stackFunction;
 
 int main() {
+    system("cls");
     int j = 0;
     char x;
     // taking infix expression from user
@@ -86,82 +87,123 @@ int main() {
     for (int i = 0;i < length_infix;i++) {
         if (infix[i] >= 65 && infix[i] <= 90 || infix[i] >= 97 && infix[i] <= 122) {
             postfixExpression[j] = infix[i];
+            cout << "pop out : " << postfixExpression[j] << endl;
             j++;
+            cout << endl << "Postfix expression is : ";
+            for (int i = 0;i < j;i++) {
+                cout << postfixExpression[i];
+            }
+            cout << endl << endl;
         }
         else {
             if (top == -1) {
                 stackFunction.push(infix[i]);
+                cout << "the stack is : [ ";
+                for (int i = top;i >= 0;i--) {
+                    cout << stack[top];
+                }
+                cout << " ]" << endl;
+                cout << "Pushed in stack : " << stack[top] << endl;
             }
             else if (infix[i] == '(') {
                 // cout << "Test" << endl;
                 stackFunction.push('(');
+                cout << "Pushed in stack : " << stack[top] << endl;
             }
             else if (infix[i] == ')') {
                 // cout << "testing" << endl;
                 while (stack[top] != '(') {
                     // cout << "now, top is " << top << endl;
                     postfixExpression[j] = stackFunction.pop();
+                    cout << "pop out : " << postfixExpression[j] << endl;
                     j++;
+                    cout << endl << "Postfix expression is : ";
+                    for (int i = 0;i < j;i++) {
+                        cout << postfixExpression[i];
+                    }
+                    cout << endl << endl;
                 }
                 stackFunction.pop();
+                cout << "pop out : " << postfixExpression[j] << endl;
             }
-            else if (stackFunction.priority(infix[i]) < stackFunction.priority(stack[top])) {
-                // cout << "I : " << i << endl;
-                for (int k = i;k >= 0;k--) {
-                    // cout << "k : " << k << endl;
-                    if (stackFunction.priority(infix[k]) < stackFunction.priority(stack[top])) {
+            else {
+                if (stackFunction.priority(infix[i]) < stackFunction.priority(stack[top])) {
+
+                    while (stackFunction.priority(infix[i]) < stackFunction.priority(stack[top]) || stackFunction.priority(stack[top]) == stackFunction.priority(stack[top - 1])) {
+
+                        cout << endl << "Postfix expression is : ";
+                        for (int i = 0;i < j;i++) {
+                            cout << postfixExpression[i];
+                        }
+                        cout << endl << endl;
+                        // }
                         postfixExpression[j] = stackFunction.pop();
                         cout << "pop out : " << postfixExpression[j] << endl;
                         j++;
-                    }
-                }
-                stackFunction.push(infix[i]);
-                cout << "stack[" << top << "] : " << stack[top] << endl;
-                // K+L-M*N+(O^P)*W/U/V*T+Q
-                // ans : KL+MN*-OP^W*U/V/T*+Q+
-            }
-            else if (stackFunction.priority(infix[i]) > stackFunction.priority(stack[top])) {
-                stackFunction.push(infix[i]);
-            }
-            else if (stackFunction.priority(infix[i]) == stackFunction.priority(stack[top])) {
-                if ((stack[top] == '+' && infix[i] == '-') || (stack[top] == '-' && infix[i] == '+')) {
-                    // cout << "test" << endl;
-                    postfixExpression[j] = stackFunction.pop();
-                    j++;
-                    stackFunction.push(infix[i]);
-                }
-                else if ((stack[top] == '*' && infix[i] == '/') || (stack[top] == '/' && infix[i] == '*')) {
-                    // cout << "test" << endl;
-                    postfixExpression[j] = stackFunction.pop();
-                    j++;
-                    stackFunction.push(infix[i]);
-                }
-                else if ((stack[top] == '^' && infix[i] == '$') || (stack[top] == '$' && infix[i] == '^')) {
-                    postfixExpression[j] = infix[i];
-                    j++;
-                }
-                else if (stack[top] == infix[i]) {
-                    for (int k = i;k >= 0;k--) {
-                        // cout << "k : " << k << endl;
-                        if (stackFunction.priority(infix[k]) == stackFunction.priority(stack[top])) {
-                            postfixExpression[j] = stackFunction.pop();
-                            j++;
+                        cout << endl << "Postfix expression is : ";
+                        for (int i = 0;i < j;i++) {
+                            cout << postfixExpression[i];
                         }
+                        cout << endl << endl;
+
+                        // K+L-M*N+(O^P)*W/U/V*T+Q
+                        // ans : KL+MN*-OP^W*U/V/T*+Q+
                     }
                     stackFunction.push(infix[i]);
+                    cout << "the stack is : [ ";
+                    for (int i = top;i >= 0;i--) {
+                        cout << stack[top];
+                    }
+                    cout << " ]" << endl;
+                    cout << "Pushed in stack : " << stack[top] << endl;
                 }
+                if (stackFunction.priority(infix[i]) > stackFunction.priority(stack[top])) {
+                    stackFunction.push(infix[i]);
+                    cout << "the stack is : [ ";
+                    for (int i = top;i >= 0;i--) {
+                        cout << stack[top];
+                    }
+                    cout << " ]" << endl;
+                    cout << "Pushed in stack : " << stack[top] << endl;
+                }
+                else if (stackFunction.priority(infix[i]) == stackFunction.priority(stack[top])) {
+                    cout << "the prioroty is same" << endl;
+                    cout << " ------------ top : " << top << " stack[top]" << stack[top] << endl;
+                    postfixExpression[j] = stackFunction.pop();
+                    j++;
+                    cout << endl << "Postfix expression is : ";
+                    for (int i = 0;i < j;i++) {
+                        cout << postfixExpression[i];
+                    }
+                    cout << endl << endl;
+                    stackFunction.push(infix[i]);
+                    cout << "the stack is : [ ";
+                    for (int i = top;i >= 0;i--) {
+                        cout << stack[top];
+                    }
+                    cout << " ]" << endl;
+                }
+
             }
-            // cout << "Top is : " << top << endl;
+
         }
     }
     while (top != -1) {
         postfixExpression[j] = stackFunction.pop();
         j++;
+        cout << endl << "Postfix expression is : ";
+        for (int i = 0;i < j;i++) {
+            cout << postfixExpression[i];
+        }
+        cout << endl << endl;
+        cout << endl << "Postfix expression is : ";
+        for (int i = 0;i < j;i++) {
+            cout << postfixExpression[i];
+        }
+        cout << endl << endl;
+        cout << "pop out : " << postfixExpression[j] << endl;
     }
-    cout << endl << "Postfix expression is : ";
-    for (int i = 0;i < j;i++) {
-        cout << postfixExpression[i];
-    }
+
     cout << endl << endl;
 
     return 0;

@@ -1,3 +1,5 @@
+// rear --> insertion  front --> deletion
+
 #include<stdio.h>
 #include<stdbool.h>
 
@@ -9,7 +11,7 @@ void display();
 void getData();
 
 int queue[5];
-int front = -1, rear = 0, maxSize = 5;
+int front = -1, rear = -1, maxSize = 5;
 
 int isFull() {
     if ((rear == front + 1) || ((front == maxSize - 1) && (rear == 0))) {
