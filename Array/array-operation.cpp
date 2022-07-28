@@ -5,6 +5,7 @@ using namespace std;
 // function definition
 int insert();
 int deletion();
+int searching();
 
 // [!] Array Operations
 
@@ -26,12 +27,17 @@ int deletion();
 
 // [x] reverse an array
 
+// [x] Find max number of array
+// [x] Find average of element in array
+// [x] Seach element and return index
+// [x] Return size of array
+
 // [ ] Replace number at given index
 
 // BUG: Fix all operations for possible possibilities (like if user enter higher index for insertion or other else...)
 
 
-int arr[15] = { 5,22,7,4,8,1,3,15,12,20,10 }, number_of_elements = 11;
+int arr[10] = { 5,22,7,4,8,1 }, number_of_elements = 6;
 int sizeOfArr = sizeof(arr) / sizeof(arr[0]);
 
 class operation {
@@ -99,10 +105,17 @@ public:
 }sortArray;
 
 class searching {
-    int searchElement;
+    int searchElement, data, position;
 public:
     int linearSearch() {
-        return 0;
+        cout << "Enter element which you want to find : ";
+        cin >> data;
+        for (int i = 0;i < number_of_elements;i++) {
+            if (arr[i] == data) {
+                cout << "Element founded at position : " << i << endl;
+                return 1;
+            }
+        }
     }
     int binarySearch() {
         // [ ] complete this binary search
@@ -274,6 +287,26 @@ public:
     }
 }deletionArray;
 
+class basicOperation {
+    int max = arr[0], avg = 0;
+public:
+    void maxNumber() {
+        for (int i = 0;i < number_of_elements;i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        cout << "Maximum Number in array is : " << max << endl;
+    }
+    void averageOfElements() {
+        for (int i = 0;i < number_of_elements;i++) {
+            avg += arr[i];
+        }
+        avg = avg / number_of_elements;
+        cout << "Average of elements in array : " << avg << endl;
+    }
+}arrayMethods;
+
 int main() {
     system("cls");
     do {
@@ -287,7 +320,10 @@ int main() {
         cout << "3. Sorting " << endl;
         cout << "4. Reverse the array " << endl;
         cout << "5. Search a element " << endl;
-        cout << "6. Quit" << endl;
+        cout << "6. Find max number in array " << endl;
+        cout << "7. Find average in array " << endl;
+        cout << "8. Find size of array " << endl;
+        cout << "9. Quit" << endl;
         cout << "-------------------------" << endl;
         cout << "What do you want to do ? : ";
         cin >> choice;
@@ -312,11 +348,11 @@ int main() {
         case 3:
             if (number_of_elements > 0) {
                 sortArray.sort();
-                result.operationResult(true, "reversed");
+                result.operationResult(true, "sorting");
             }
             else {
                 cout << "The array is already empty...!" << endl;
-                result.operationResult(false, "reversed");
+                result.operationResult(false, "sorting");
             }
             break;
         case 4:
@@ -329,15 +365,24 @@ int main() {
                 result.operationResult(false, "reversed");
             }
             break;
-        // case 5:
-        //     if (searching()) {
-        //         result.operationResult(true, "founded");
-        //     }
-        //     else {
-        //         result.operationResult(false, "find");
-        //     }
-        //     break;
+        case 5:
+            if (searching()) {
+                result.operationResult(true, "founded");
+            }
+            else {
+                result.operationResult(false, "find");
+            }
+            break;
         case 6:
+            arrayMethods.maxNumber();
+            break;
+        case(7):
+            arrayMethods.averageOfElements();
+            break;
+        case(8):
+            cout << "Size of array is : " << number_of_elements << endl;
+            break;
+        case(9):
             exit(0);
             break;
 
@@ -486,16 +531,16 @@ int searching() {
         // displaying array after deeletion...
         arrayMethod.displayArr(arr, number_of_elements);
         break;
-    case 2:
-        if (searchElement.binarySearch()) {
-            return 1;
-        }
-        else {
-            return 0;
-        }
-        // displaying array after deletion...
-        arrayMethod.displayArr(arr, number_of_elements);
-        break;
+        /* case 2:
+            if (searchElement.binarySearch()) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+            // displaying array after deletion...
+            arrayMethod.displayArr(arr, number_of_elements);
+            break; */
 
     default:
         cout << "Invalid Choice" << endl;
